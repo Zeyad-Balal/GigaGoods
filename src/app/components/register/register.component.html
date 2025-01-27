@@ -1,27 +1,96 @@
 <section class="b-main-light rounded-4 shadow p-3 my-2">
-    <h1 class="h2 text-main ">Register</h1>
-    
+  <h1 class="h2 text-main">Register</h1>
 
-    <form [formGroup]="registerForm" (ngSubmit)="registerSubmit()">
-        <div class="my-2">
-            <label for="name">Name</label>
-    <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter name">
-            @if (registerForm.get('name')?.errors && registerForm.get('name')?.touched) {
+  <form [formGroup]="registerForm" (ngSubmit)="registerSubmit()">
+    <div class="my-2">
+      <label for="name">Name</label>
+      <input
+        [ngClass]="{
+          'is-invalid':
+            registerForm.get('name')?.errors &&
+            (registerForm.get('name')?.touched ||
+              registerForm.get('name')?.dirty),
+          'is-valid':
+            !registerForm.get('name')?.errors &&
+            (registerForm.get('name')?.touched ||
+              registerForm.get('name')?.dirty)
+        }"
+        type="text"
+        formControlName="name"
+        class="form-control"
+        id="name"
+        placeholder="Enter name"
+      />
+      @if (registerForm.get('name')?.errors &&
+      (registerForm.get('name')?.touched || registerForm.get('name')?.dirty)) {
 
-            <div class="alert alert-danger w-50">
-                @if(registerForm.get('name')?.getError('required')) {
-                <p class="m-0">name is required</p>
-                }
+      <div class="alert alert-danger w-50">
+        @if(registerForm.get('name')?.getError('required')) {
+        <p class="m-0">name is required</p>
+        } @else if(registerForm.get('name')?.getError('minlength')) {
+        <p class="m-0">name should be more than 3 letters</p>
+        } @if(registerForm.get('name')?.getError('maxlength')) {
+        <p class="m-0">name should be less than 9 letters</p>
+        }
+      </div>
+      }
+      <label for="password">Password</label>
+      <input
+        type="text"
+        formControlName="password"
+        class="form-control"
+        id="password"
+        placeholder="Enter password"
+      />
+      @if (registerForm.get('password')?.errors &&
+      (registerForm.get('password')?.touched ||
+      registerForm.get('password')?.dirty)) {
 
-                @else if(registerForm.get('name')?.getError('minlength')) {
-                <p class="m-0">name should be more than 3 letters</p>
-                }
+      <div class="alert alert-danger w-50">
+        @if(registerForm.get('password')?.getError('required')) {
+        <p class="m-0">password is required</p>
+        }
+      </div>
+      }
 
-                @if(registerForm.get('name')?.getError('maxlength')) {
-                <p class="m-0">name should be less than 9 letters</p>
-                }
-            </div>
-            }
-        </div>
-    </form>
+      <label for="email">E-mail</label>
+      <input
+        type="text"
+        formControlName="email"
+        class="form-control"
+        id="email"
+        placeholder="Enter email"
+      />
+      @if (registerForm.get('email')?.errors &&
+      (registerForm.get('email')?.touched || registerForm.get('email')?.dirty))
+      {
+
+      <div class="alert alert-danger w-50">
+        @if(registerForm.get('email')?.getError('required')) {
+        <p class="m-0">email is required</p>
+        }
+      </div>
+      }
+
+      <label for="phone">Phone</label>
+      <input
+        type="text"
+        formControlName="phone"
+        class="form-control"
+        id="phone"
+        placeholder="Enter phone"
+      />
+      @if (registerForm.get('phone')?.errors &&
+      (registerForm.get('phone')?.touched || registerForm.get('phone')?.dirty))
+      {
+
+      <div class="alert alert-danger w-50">
+        @if(registerForm.get('phone')?.getError('required')) {
+        <p class="m-0">phone is required</p>
+        }
+      </div>
+      }
+      <button class="btn btn-primary my-4" type="submit">Register</button>
+    </div>
+  </form>
 </section>

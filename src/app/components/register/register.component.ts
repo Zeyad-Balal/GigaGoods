@@ -3,13 +3,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { Component,inject  } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthServiceService } from '../auth-service.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, HttpClientModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, HttpClientModule, CommonModule,NgClass],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
@@ -22,11 +22,11 @@ export class RegisterComponent {
  
   registerForm = new FormGroup({
 
-    name: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+    name: new FormControl(null, [Validators.required, Validators.minLength(4)]),
     email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
     rePassword: new FormControl(null, [Validators.required, Validators.minLength(6)]),
-    phone: new FormControl(null, [Validators.required, Validators.minLength(10)]),
+    phone: new FormControl(null, [Validators.required, Validators.minLength(11)]),
   });
 
   registerSubmit(): void {
