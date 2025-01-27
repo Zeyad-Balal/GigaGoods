@@ -1,33 +1,65 @@
-import {HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
-import { Component,inject  } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { AuthServiceService } from '../auth-service.service';
 import { CommonModule, NgClass } from '@angular/common';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, HttpClientModule, CommonModule,NgClass],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    CommonModule,
+    NgClass,
+  ],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
-
-  msgError: string = "";
+  msgError: string = '';
   isLoad: boolean = false;
 
-  constructor(private _AuthService: AuthServiceService) { }
- 
-  registerForm = new FormGroup({
+  constructor(
+    private _AuthService: AuthServiceService,
+    private _FormBuilder: FormBuilder,
+    private _Router: Router
+  ) {}
+  registerForm: FormGroup = this._FormBuilder.group(
+    {
+      name: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(10),
+        ],
+      ],
+      email: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required, Validators.pattern(/^\w{3,}$/)]],
+      rePassword: [null],
+      //phone: [[Validators.required, Validators.pattern(/^01[125][0-9]{8}$/)]],
+    },
+    { validators: [this.confirmPassword] }
+  );
 
-    name: new FormControl(null, [Validators.required, Validators.minLength(4)]),
-    email: new FormControl(null, [Validators.required, Validators.email]),
-    password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
-    rePassword: new FormControl(null, [Validators.required, Validators.minLength(6)]),
-    phone: new FormControl(null, [Validators.required, Validators.minLength(11)]),
-  });
+  /*confirm pass*/
+  confirmPassword(g: AbstractControl) {
+    let password = g.get('password')?.value;
+    let rePassword = g.get('rePassword')?.value;
+
+    return password === rePassword ? null : { mismatch: true };
+  }
 
   registerSubmit(): void {
     if (this.registerForm.valid) {
@@ -35,33 +67,20 @@ export class RegisterComponent {
       this._AuthService.setRegisterForm(this.registerForm.value).subscribe({
         next: (res) => {
           console.log(res);
+          if (res.message == 'success') {
+            this._Router.navigate(['/login', res.token]);
+          }
           this.isLoad = false;
-
         },
         error: (err: HttpErrorResponse) => {
           this.msgError = err.error.message;
           console.log(err);
           this.isLoad = false;
-        }
-      })
+        },
+      });
+    } else {
+      //  this.registerForm.setErrors({{ mismatch: true }});
+      this.registerForm.markAllAsTouched();
     }
   }
-
-
-/*confirm pass*/
-/*confrimPassword(g : AbstractControl): {
-  if(g.get('password')?.value === g.get('rePassword')?.value){
-    return null;
-  }
-  else{
-    return {passwordNotMatch : true}
-  }
 }
-*/
-
-
-}
-
-
-
-

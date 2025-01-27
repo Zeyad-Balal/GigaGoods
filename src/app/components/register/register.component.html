@@ -29,13 +29,21 @@
         <p class="m-0">name is required</p>
         } @else if(registerForm.get('name')?.getError('minlength')) {
         <p class="m-0">name should be more than 3 letters</p>
-        } @if(registerForm.get('name')?.getError('maxlength')) {
-        <p class="m-0">name should be less than 9 letters</p>
         }
       </div>
       }
       <label for="password">Password</label>
       <input
+        [ngClass]="{
+          'is-invalid':
+            registerForm.get('name')?.errors &&
+            (registerForm.get('name')?.touched ||
+              registerForm.get('name')?.dirty),
+          'is-valid':
+            !registerForm.get('name')?.errors &&
+            (registerForm.get('name')?.touched ||
+              registerForm.get('name')?.dirty)
+        }"
         type="text"
         formControlName="password"
         class="form-control"
@@ -49,12 +57,48 @@
       <div class="alert alert-danger w-50">
         @if(registerForm.get('password')?.getError('required')) {
         <p class="m-0">password is required</p>
+        } @else if(registerForm.get('password')?.getError('minlength')) {
+        <p class="m-0">
+          password should be more than 6 letters or characters or digits
+        </p>
         }
       </div>
       }
 
+      <label for="password">Confirm Password</label>
+      <input
+        [ngClass]="{
+          'is-invalid':
+            registerForm.get('name')?.errors &&
+            (registerForm.get('name')?.touched ||
+              registerForm.get('name')?.dirty),
+          'is-valid':
+            !registerForm.get('name')?.errors &&
+            (registerForm.get('name')?.touched ||
+              registerForm.get('name')?.dirty)
+        }"
+        type="text"
+        formControlName="rePassword"
+        class="form-control"
+        id="rePassword"
+        placeholder="confirm password"
+      />
+      @if (registerForm.get('rePassword')?.errors &&
+      (registerForm.get('rePassword')?.touched ||
+      registerForm.get('rePassword')?.dirty)) { }
+
       <label for="email">E-mail</label>
       <input
+        [ngClass]="{
+          'is-invalid':
+            registerForm.get('name')?.errors &&
+            (registerForm.get('name')?.touched ||
+              registerForm.get('name')?.dirty),
+          'is-valid':
+            !registerForm.get('name')?.errors &&
+            (registerForm.get('name')?.touched ||
+              registerForm.get('name')?.dirty)
+        }"
         type="text"
         formControlName="email"
         class="form-control"
@@ -71,7 +115,7 @@
         }
       </div>
       }
-
+      <!--
       <label for="phone">Phone</label>
       <input
         type="text"
@@ -89,8 +133,16 @@
         <p class="m-0">phone is required</p>
         }
       </div>
+      }-->
+      <button class="btn-main ms-auto d-block" type="submit">
+        Register @if(isLoad){
+        <span><li class="fas fa-spin fa-spinner"></li></span>
+        }
+      </button>
+
+      @if(msgError){
+      <p class="alert alert-danger w-50">{{ msgError }}</p>
       }
-      <button class="btn btn-primary my-4" type="submit">Register</button>
     </div>
   </form>
 </section>
