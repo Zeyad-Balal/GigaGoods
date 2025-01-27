@@ -1,1 +1,27 @@
-<p>register works!</p>
+<section class="b-main-light rounded-4 shadow p-3 my-2">
+    <h1 class="h2 text-main ">Register</h1>
+    
+
+    <form [formGroup]="registerForm" (ngSubmit)="registerSubmit()">
+        <div class="my-2">
+            <label for="name">Name</label>
+    <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter name">
+            @if (registerForm.get('name')?.errors && registerForm.get('name')?.touched) {
+
+            <div class="alert alert-danger w-50">
+                @if(registerForm.get('name')?.getError('required')) {
+                <p class="m-0">name is required</p>
+                }
+
+                @else if(registerForm.get('name')?.getError('minlength')) {
+                <p class="m-0">name should be more than 3 letters</p>
+                }
+
+                @if(registerForm.get('name')?.getError('maxlength')) {
+                <p class="m-0">name should be less than 9 letters</p>
+                }
+            </div>
+            }
+        </div>
+    </form>
+</section>
