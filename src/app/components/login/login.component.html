@@ -1,1 +1,83 @@
-<p>login works!</p>
+<section class="b-main-light rounded-4 shadow p-3 my-2">
+    <h1 class="h2 text-main">Login</h1>
+  
+    <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
+      <div class="my-2">
+   
+      
+        <label for="email">E-mail</label>
+        <input
+          [ngClass]="{
+            'is-invalid':
+              loginForm.get('name')?.errors &&
+              (loginForm.get('name')?.touched ||
+              loginForm.get('name')?.dirty),
+            'is-valid':
+              !loginForm.get('name')?.errors &&
+              (loginForm.get('name')?.touched ||
+              loginForm.get('name')?.dirty)
+          }"
+          type="text"
+          formControlName="email"
+          class="form-control"
+          id="email"
+          placeholder="Enter email"
+        />
+        @if (loginForm.get('email')?.errors &&
+        (loginForm.get('email')?.touched || loginForm.get('email')?.dirty))
+        {
+  
+        <div class="alert alert-danger w-50">
+          @if(loginForm.get('email')?.getError('required')) {
+          <p class="m-0">email is required</p>
+          }
+        </div>
+        }
+       
+        <label for="password">Password</label>
+        <input
+          [ngClass]="{
+            'is-invalid':
+            loginForm.get('name')?.errors &&
+              (loginForm.get('name')?.touched ||
+                loginForm.get('name')?.dirty),
+            'is-valid':
+              !loginForm.get('name')?.errors &&
+              (loginForm.get('name')?.touched ||
+              loginForm.get('name')?.dirty)
+          }"
+          type="text"
+          formControlName="password"
+          class="form-control"
+          id="password"
+          placeholder="Enter password"
+        />
+        @if (loginForm.get('password')?.errors &&
+        (loginForm.get('password')?.touched ||
+        loginForm.get('password')?.dirty)) {
+  
+        <div class="alert alert-danger w-50">
+          @if(loginForm.get('password')?.getError('required')) {
+          <p class="m-0">password is required</p>
+          } @else if(loginForm.get('password')?.getError('minlength')) {
+          <p class="m-0">
+            password should be more than 6 letters or characters or digits
+          </p>
+          }
+        </div>
+        }
+
+
+        <button class="btn-main ms-auto d-block" type="submit">
+          Login @if(isLoad){
+          <span><li class="fas fa-spin fa-spinner"></li></span>
+          }
+        </button>
+  
+        @if(msgError){
+        <p class="alert alert-danger w-50">{{ msgError }}</p>
+        }
+      </div>
+    </form>
+  </section>
+  

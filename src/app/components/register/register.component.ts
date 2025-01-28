@@ -9,7 +9,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AuthServiceService } from '../auth-service.service';
+import { AuthServiceService } from '../../Core/services/auth-service.service';
 import { CommonModule, NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -68,7 +68,7 @@ export class RegisterComponent {
         next: (res) => {
           console.log(res);
           if (res.message == 'success') {
-            this._Router.navigate(['/login', res.token]);
+            this._Router.navigate(['/login']);
           }
           this.isLoad = false;
         },
