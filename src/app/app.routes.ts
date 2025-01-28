@@ -9,23 +9,28 @@ import { ProudctsComponent } from './components/proudcts/proudcts.component';
 import { CartComponent } from './components/cart/cart.component';
 import { BrandsComponent } from './components/brands/brands.component';
 import { CategoriesComponent } from './components/categories/categories.component';
+import { authGuard } from './Core/guards/auth.guard';
+import { loggedGuard } from './Core/guards/logged.guard';
 
 export const routes: Routes = [
   {
     path: '',
     component: AuthLayoutComponent,
+    canActivate: [loggedGuard],
     children: [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent, title: 'Login' },
       { path: 'register', component: RegisterComponent, title: 'Register' },
     ],
   },
+  
   {
     path: '',
-    component: BlankLayoutComponent,
+    component: BlankLayoutComponent, 
+    canActivate: [authGuard],
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
-      { path: 'home', component: HomeComponent, title: 'Home' },
+      { path: 'home', component: HomeComponent, title: 'Home'  },
       { path: 'products', component: ProudctsComponent, title: 'Products' },
       { path: 'cart', component: CartComponent, title: 'Cart' },
       { path: 'brands', component: BrandsComponent, title: 'Brands' },
