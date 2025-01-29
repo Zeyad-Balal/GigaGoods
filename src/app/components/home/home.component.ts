@@ -1,31 +1,98 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ProductsService } from '../../Core/services/products.service';
 import { IProduct } from '../../Core/interfaces/iproduct';
+import { Subscription } from 'rxjs';
+import { CategoriesService } from '../../Core/services/categories.service';
+import { ICategory } from '../../Core/interfaces/icategory';
+import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [CarouselModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
 })
-export class HomeComponent implements OnInit {
-private readonly _ProductService = inject(ProductsService);
-constructor() { }
+export class HomeComponent implements OnInit, OnDestroy {
+  private readonly _ProductService = inject(ProductsService);
+  private readonly _CategoriesService = inject(CategoriesService);
+  constructor() {}
 
-productList:IProduct[] = [];
+  productList: IProduct[] = [];
+  categoriesList: ICategory[] = [];
 
-//to load products once the component is opened
-ngOnInit(): void {
-  this._ProductService.getAllProducts().subscribe({
-    next: (res) => {
-      this.productList = res.data;
-      console.log(res.data);
+  getAllProductsSubscription!: Subscription;
+  getAllCategoriesSubscription!: Subscription;
+
+  customOptionsCategories: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    autoplay: true,
+    autoplayTimeout: 3000,
+    autoplayHoverPause: true,
+    dots: true,
+    navSpeed: 100,
+    navText: ['', ''],
+    responsive: {
+      0: {
+        items: 1,
+      },
+      400: {
+        items: 2,
+      },
+      740: {
+        items: 3,
+      },
+      940: {
+        items: 6,
+      },
     },
-    error: (err) => {
-      console.log(err);
-    },
-  });
-}
+    nav: false,
+  };
+  customOptionsMain: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    autoplay: true,
+    autoplayTimeout: 3000,
+    autoplayHoverPause: true,
+    dots: true,
+    navSpeed: 100,
+    navText: ['', ''],
+    items: 1,
+    nav: false,
+  };
 
+  //to load products once the component is opened
+  ngOnInit(): void {
+    this.getAllCategoriesSubscription = this._CategoriesService
+      .getAllCategories()
+      .subscribe({
+        next: (res) => {
+          this.categoriesList = res.data; //[{ _id: '1', name: 'category1' }];
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    this.getAllProductsSubscription = this._ProductService
+      .getAllProducts()
+      .subscribe({
+        next: (res) => {
+          this.productList = res.data;
+          console.log(res.data);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+  }
+
+  ngOnDestroy(): void {
+    //to unsubscribe from the observable (get all products)
+    this.getAllProductsSubscription?.unsubscribe(); /* ? to check if the observable is null or not*/
+  }
 }

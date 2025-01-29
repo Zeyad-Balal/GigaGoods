@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -12,6 +12,7 @@ import {
 import { AuthServiceService } from '../../Core/services/auth-service.service';
 import { CommonModule, NgClass } from '@angular/common';
 import { Router } from '@angular/router';
+import { Subscribable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -26,10 +27,10 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy {
   msgError: string = '';
   isLoad: boolean = false;
-
+  registerSubscribe!: Subscription;
   constructor(
     private _AuthService: AuthServiceService,
     private _FormBuilder: FormBuilder,
@@ -64,23 +65,29 @@ export class RegisterComponent {
   registerSubmit(): void {
     if (this.registerForm.valid) {
       this.isLoad = true;
-      this._AuthService.setRegisterForm(this.registerForm.value).subscribe({
-        next: (res) => {
-          console.log(res);
-          if (res.message == 'success') {
-            this._Router.navigate(['/login']);
-          }
-          this.isLoad = false;
-        },
-        error: (err: HttpErrorResponse) => {
-          this.msgError = err.error.message;
-          console.log(err);
-          this.isLoad = false;
-        },
-      });
+      this.registerSubscribe = this._AuthService
+        .setRegisterForm(this.registerForm.value)
+        .subscribe({
+          next: (res) => {
+            console.log(res);
+            if (res.message == 'success') {
+              this._Router.navigate(['/login']);
+            }
+            this.isLoad = false;
+          },
+          error: (err: HttpErrorResponse) => {
+            this.msgError = err.error.message;
+            console.log(err);
+            this.isLoad = false;
+          },
+        });
     } else {
       //  this.registerForm.setErrors({{ mismatch: true }});
       this.registerForm.markAllAsTouched();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.registerSubscribe?.unsubscribe(); /* ? to check if the observable is null or not*/
   }
 }
