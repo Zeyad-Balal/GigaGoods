@@ -3,6 +3,7 @@ import { Injectable ,inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/env';
 import { jwtDecode } from 'jwt-decode';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -10,7 +11,7 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class AuthServiceService {
 
-  constructor(private _HttpClient: HttpClient) { }
+  constructor(private _HttpClient: HttpClient , private _Router: Router) { }
  
   userData:any = null;
   //register auth API
@@ -31,6 +32,17 @@ export class AuthServiceService {
     }
      /*test log user data */
     //console.log('user info' , this.userData); 
+  }
+
+  logOut():void{
+    localStorage.removeItem('USER_TOKEN');
+    this.userData = null;
+
+    /*if there is API to remove token ,call it*/
+    /**/
+    //navigate to login page
+    this._Router.navigate(['/login']);
+
   }
 
 }
