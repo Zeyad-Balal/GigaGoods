@@ -95,5 +95,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     //to unsubscribe from the observable (get all products)
     this.getAllProductsSubscription?.unsubscribe(); /* ? to check if the observable is null or not*/
+    this.getAllCategoriesSubscription?.unsubscribe();
   }
 }

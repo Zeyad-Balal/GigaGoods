@@ -12,6 +12,7 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { authGuard } from './Core/guards/auth.guard';
 import { loggedGuard } from './Core/guards/logged.guard';
 import { DetailsComponent } from './components/details/details.component';
+import { CategoryDetailsComponent } from './components/category-details/category-details.component';
 
 export const routes: Routes = [
   {
@@ -24,14 +25,14 @@ export const routes: Routes = [
       { path: 'register', component: RegisterComponent, title: 'Register' },
     ],
   },
-  
+
   {
     path: '',
-    component: BlankLayoutComponent, 
+    component: BlankLayoutComponent,
     canActivate: [authGuard],
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
-      { path: 'home', component: HomeComponent, title: 'Home'  },
+      { path: 'home', component: HomeComponent, title: 'Home' },
       { path: 'products', component: ProudctsComponent, title: 'Products' },
       { path: 'cart', component: CartComponent, title: 'Cart' },
       { path: 'brands', component: BrandsComponent, title: 'Brands' },
@@ -44,6 +45,11 @@ export const routes: Routes = [
         path: 'details/:id',
         component: DetailsComponent,
         title: 'Product Details',
+      },
+      {
+        path: 'categoryDetails/:id',
+        component: CategoryDetailsComponent,
+        title: 'Category Details',
       },
     ],
   },

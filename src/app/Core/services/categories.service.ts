@@ -13,7 +13,7 @@ export class CategoriesService {
     return this._HttpClient.get(`${environment.baseUrl}/api/v1/categories`);
   }
 
-  getSpecificCategory(id: string): Observable<any> {
+  getSpecificCategory(id: string | null): Observable<any> {
     return this._HttpClient.get(
       `${environment.baseUrl}/api/v1/categories/${id}`
     );

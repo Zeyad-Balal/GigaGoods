@@ -50,7 +50,7 @@
   <owl-carousel-o [options]="customOptionsCategories">
     @for(category of categoriesList ; track category._id) {
     <ng-template carouselSlide>
-      <div>
+      <div [routerLink]="['/categoryDetails',category._id]" class="category p-2">
         <img
           class="w-100 border"
           [src]="category.image"

@@ -1,0 +1,27 @@
+@if (categoryDetails!== null) {
+<section>
+  <h1 class="text-center text-main my-2">
+    {{ categoryDetails.name }} Category
+  </h1>
+  <div class="row align-items-center">
+    <div class="col-md-3">
+      <div>
+        <img
+          [src]="categoryDetails.image"
+          class="w-100"
+          [alt]="categoryDetails.name"
+          height="300px"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-9">
+    <div>
+      <h2 class="h4">{{ categoryDetails.name }}</h2>
+      <p class="text-muted">{{ categoryDetails.createdAt }}</p>
+      <p class="text-muted">{{ categoryDetails.createdAt }}</p>
+    </div>
+  </div>
+</section>
+}
