@@ -13,6 +13,7 @@ import { authGuard } from './Core/guards/auth.guard';
 import { loggedGuard } from './Core/guards/logged.guard';
 import { DetailsComponent } from './components/details/details.component';
 import { CategoryDetailsComponent } from './components/category-details/category-details.component';
+import { ForgetpasswordComponent } from './components/forgetpassword/forgetpassword.component';
 
 export const routes: Routes = [
   {
@@ -23,6 +24,11 @@ export const routes: Routes = [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent, title: 'Login' },
       { path: 'register', component: RegisterComponent, title: 'Register' },
+      {
+        path: 'forgetpassword',
+        component: ForgetpasswordComponent,
+        title: 'Forget Password',
+      },
     ],
   },
 

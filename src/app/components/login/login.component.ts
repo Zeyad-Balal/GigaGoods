@@ -11,12 +11,12 @@ import {
 } from '@angular/forms';
 import { AuthServiceService } from '../../Core/services/auth-service.service';
 import { CommonModule, NgClass } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, NgClass, HttpClientModule, CommonModule],
+  imports: [ReactiveFormsModule, NgClass, HttpClientModule, CommonModule,RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
