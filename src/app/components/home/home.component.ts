@@ -7,21 +7,30 @@ import { ICategory } from '../../Core/interfaces/icategory';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { RouterLink } from '@angular/router';
 import { CurrencyPipe, UpperCasePipe } from '@angular/common';
-import { SalePipe } from '../../Core/pipes/sale.pipe';
 import { SplitTextPipe } from '../../Core/pipes/split-text.pipe';
 import { SearchPipe } from '../../Core/pipes/search.pipe';
 import { FormsModule } from '@angular/forms';
+import { CartService } from '../../Core/services/cart.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CarouselModule, RouterLink, UpperCasePipe ,CurrencyPipe ,SplitTextPipe, FormsModule ,SearchPipe],
+  imports: [
+    CarouselModule,
+    RouterLink,
+    UpperCasePipe,
+    CurrencyPipe,
+    SplitTextPipe,
+    FormsModule,
+    SearchPipe,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit, OnDestroy {
   private readonly _ProductService = inject(ProductsService);
   private readonly _CategoriesService = inject(CategoriesService);
+  private readonly _CartService = inject(CartService);
   constructor() {}
   search_value: string = '';
   productList: IProduct[] = [];
@@ -96,6 +105,20 @@ export class HomeComponent implements OnInit, OnDestroy {
         },
       });
   }
+
+
+  //to add product to cart
+  addToCart(id: string): void {
+  this._CartService.addProductToCart(id).subscribe({
+    next: (res) => {
+      console.log(res);
+
+    },
+    error: (err) => {
+      console.log(err);
+    },
+  });
+}
 
   ngOnDestroy(): void {
     //to unsubscribe from the observable (get all products)
