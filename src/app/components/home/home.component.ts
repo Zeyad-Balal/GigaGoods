@@ -6,11 +6,16 @@ import { CategoriesService } from '../../Core/services/categories.service';
 import { ICategory } from '../../Core/interfaces/icategory';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { RouterLink } from '@angular/router';
+import { CurrencyPipe, UpperCasePipe } from '@angular/common';
+import { SalePipe } from '../../Core/pipes/sale.pipe';
+import { SplitTextPipe } from '../../Core/pipes/split-text.pipe';
+import { SearchPipe } from '../../Core/pipes/search.pipe';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CarouselModule, RouterLink],
+  imports: [CarouselModule, RouterLink, UpperCasePipe ,CurrencyPipe ,SplitTextPipe, FormsModule ,SearchPipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -18,7 +23,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private readonly _ProductService = inject(ProductsService);
   private readonly _CategoriesService = inject(CategoriesService);
   constructor() {}
-
+  search_value: string = '';
   productList: IProduct[] = [];
   categoriesList: ICategory[] = [];
 

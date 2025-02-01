@@ -4,11 +4,12 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CategoriesService } from '../../Core/services/categories.service';
 import { ICategory } from '../../Core/interfaces/icategory';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-category-details',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, DatePipe],
   templateUrl: './category-details.component.html',
   styleUrl: './category-details.component.scss',
 })

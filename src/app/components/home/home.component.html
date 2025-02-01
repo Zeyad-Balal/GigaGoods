@@ -50,7 +50,10 @@
   <owl-carousel-o [options]="customOptionsCategories">
     @for(category of categoriesList ; track category._id) {
     <ng-template carouselSlide>
-      <div [routerLink]="['/categoryDetails',category._id]" class="category p-2">
+      <div
+        [routerLink]="['/categoryDetails', category._id]"
+        class="category p-2"
+      >
         <img
           class="w-100 border"
           [src]="category.image"
@@ -66,28 +69,37 @@
 <!-- products -->
 <section>
   <h2 class="h4 text-main text-center bg-main-light p-2">Best Seller</h2>
+  <input
+    type="search"
+    class="form-control w-50 mx-auto my-2 border border-black"
+    [(ngModel)]="search_value"
+    placeholder="Search product by name" 
+  />
   <div class="row g-3">
-    @for (product of productList.slice(0,12); track product.id) {
+    @for (product of productList.slice(0,12) | search: search_value ; track
+    product.id) {
     <div class="col-md-2">
-      <div class="product p-2 ">
-      <div  [routerLink]="['/details',product.id]">
-        <img [src]="product.imageCover" class="w-100" [alt]="product.title" />
-        <h3 class="small text-main">{{ product.category.name }}</h3>
-        <h4 class="h6">{{ product.title.split(" ").slice(0, 2).join(" ") }}</h4>
-        <div class="d-flex justify-content-between align-items-center">
-          <span>{{ product.price }} EGP</span>
-          <div>
-            @for(num of [1,2,3,4,5].slice(0,product.ratingsAverage) ; track
-            $index) {
-            <i class="fa-solid fa-star text-warning"></i>
-            } @if(product.ratingsAverage % 1 !== 0) {
-            <i class="fa-solid fa-star-half-stroke rating-color"></i>
-            }
-            <span class="text-muted">{{ product.ratingsAverage }}</span>
+      <div class="product p-2">
+        <div [routerLink]="['/details', product.id]">
+          <img [src]="product.imageCover" class="w-100" [alt]="product.title" />
+          <h3 class="small text-main">
+            {{ product.category.name | uppercase | splitText : 2 }}
+          </h3>
+          <h4 class="h6">{{ product.title | splitText : 2 }}</h4>
+          <div class="d-flex justify-content-between align-items-center">
+            <span>{{ product.price | currency : "GBP" }}</span>
+            <div>
+              @for(num of [1,2,3,4,5].slice(0,product.ratingsAverage) ; track
+              $index) {
+              <i class="fa-solid fa-star text-warning"></i>
+              } @if(product.ratingsAverage % 1 !== 0) {
+              <i class="fa-solid fa-star-half-stroke rating-color"></i>
+              }
+              <span class="text-muted">{{ product.ratingsAverage }}</span>
+            </div>
           </div>
         </div>
-      </div>
-        <button class="btn-main w-100" >Add to cart</button>
+        <button class="btn-main w-100">Add to cart</button>
       </div>
     </div>
     }
