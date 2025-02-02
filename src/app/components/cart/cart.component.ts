@@ -9,27 +9,38 @@ import { ICart } from '../../Core/interfaces/icart';
   standalone: true,
   imports: [CurrencyPipe],
   templateUrl: './cart.component.html',
-  styleUrl: './cart.component.scss'
+  styleUrl: './cart.component.scss',
 })
-export class CartComponent implements OnInit , OnDestroy{
-private readonly _CartService = inject(CartService);
+export class CartComponent implements OnInit, OnDestroy {
+  readonly _CartService = inject(CartService);
 
-cartSubscribe!:Subscription;
-cartProducts:ICart | null = null; // to avoid reload HTML before data loaded
-//
-ngOnInit(): void {
+  cartSubscribe!: Subscription;
+  cartProducts: ICart | null = null; // to avoid reload HTML before data loaded
+  //
+  ngOnInit(): void {
     this.cartSubscribe = this._CartService.getProductsFromCart().subscribe({
-      next:(res) =>{
-       this.cartProducts = res.data;
+      next: (res) => {
+        this.cartProducts = res.data;
       },
-      error:(err) =>{
+      error: (err) => {
         console.log(err);
-      }
-    })
-}
+      },
+    });
+  }
 
-ngOnDestroy(): void {
+  removeProduct(id: string) {
+    this._CartService.removeProductFromCart(id).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.cartProducts = res.data; // to re-load the new set of products in cart view (override on cart data)
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  ngOnDestroy(): void {
     this.cartSubscribe?.unsubscribe();
-}
-
+  }
 }

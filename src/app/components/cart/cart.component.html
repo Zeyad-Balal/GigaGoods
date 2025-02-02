@@ -1,28 +1,42 @@
 <section class="bg-main-light rounded-4 shadow p-4 my-2 w-75 mx-auto">
-    <h1 class="h2 text-center text-muted">Shop Cart</h1>
-    <p class="text-main">Total Price: {{cartProducts?.totalCartPrice | currency:'GBP'}}</p>
-@for (item of cartProducts?.products ; track item.product.id) {
-    <div class="row mb-1 border-bottom">
-        <div class="col-md-1">
-            <div>
-                <img [src]="item.product.imageCover" [alt]="item.product.title" class="w-100"  />
-            </div>
-        </div>
-        <div class="col-md-11 d-flex align-items-center justify-content-between">
-            <!--product data-->
-            <div>
-                <h3 class="h5">{{item.product.title}}</h3>
-                <p class="text-main">Price: {{item.price | currency:'GBP'}}</p>
-                <span class="text-danger cr"><li class="fa-solid fa-trash"></li></span>
-            </div>
-            <!-- (+) & (-) buttons-->
-            <div class="d-flex align-items-center gap-2">
-                <span class="text-main cr"><i class="fa-solid fa-square-plus fa-2xl"></i></span>
-                <span>{{item.count}}</span>
-                <span class="text-main cr"><i class="fa-solid fa-square-minus fa-2xl"></i></span>
-
-            </div>
-        </div>
+  <h1 class="h2 text-center text-muted">Shop Cart</h1>
+  <p class="text-main">
+    Total Price: {{ cartProducts?.totalCartPrice | currency : "GBP" }}
+  </p>
+  @for (item of cartProducts?.products ; track item.product.id) {
+  <div class="row mb-1 border-bottom">
+    <div class="col-md-1">
+      <div>
+        <img
+          [src]="item.product.imageCover"
+          [alt]="item.product.title"
+          class="w-100"
+        />
+      </div>
     </div>
-}
+    <div class="col-md-11 d-flex align-items-center justify-content-between">
+      <!--product data-->
+      <div>
+        <h3 class="h5">{{ item.product.title }}</h3>
+        <p class="text-main">Price: {{ item.price | currency : "GBP" }}</p>
+        <button
+          class="text-danger btn p-0 cr"
+          (click)="removeProduct(item.product.id)"
+        >
+          <li class="fa-solid fa-trash"></li>
+        </button>
+      </div>
+      <!-- (+) & (-) buttons-->
+      <div class="d-flex align-items-center gap-2">
+        <span class="text-main cr"
+          ><i class="fa-solid fa-square-plus fa-2xl"></i
+        ></span>
+        <span>{{ item.count }}</span>
+        <span class="text-main cr"
+          ><i class="fa-solid fa-square-minus fa-2xl"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+  }
 </section>

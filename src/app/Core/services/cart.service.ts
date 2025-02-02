@@ -25,5 +25,13 @@ export class CartService {
     return this._HttpClient.get(`${environment.baseUrl}/api/v1/cart`, {
       headers: this.myHeaders,
     });
-  }  
+  }
+
+  /* */
+
+  removeProductFromCart(id: string): Observable<any> {
+    return this._HttpClient.delete(`${environment.baseUrl}/api/v1/cart/${id}`, {
+      headers: this.myHeaders,
+    });
+  }
 }
