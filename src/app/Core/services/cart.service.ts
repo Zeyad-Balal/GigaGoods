@@ -20,5 +20,10 @@ export class CartService {
     });
   }
 
-  
+  /**/
+  getProductsFromCart(): Observable<any> {
+    return this._HttpClient.get(`${environment.baseUrl}/api/v1/cart`, {
+      headers: this.myHeaders,
+    });
+  }  
 }
