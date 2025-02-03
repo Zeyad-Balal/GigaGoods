@@ -3,6 +3,7 @@ import { CartService } from '../../Core/services/cart.service';
 import { Subscription } from 'rxjs';
 import { CurrencyPipe } from '@angular/common';
 import { ICart } from '../../Core/interfaces/icart';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cart',
@@ -13,6 +14,8 @@ import { ICart } from '../../Core/interfaces/icart';
 })
 export class CartComponent implements OnInit, OnDestroy {
   readonly _CartService = inject(CartService);
+    private readonly _ToastrService = inject(ToastrService);
+  
 
   cartSubscribe!: Subscription;
   cartProducts: ICart | null = null; // to avoid reload HTML before data loaded
@@ -33,6 +36,7 @@ export class CartComponent implements OnInit, OnDestroy {
       next: (res) => {
         console.log(res);
         this.cartProducts = res.data; // to re-load the new set of products in cart view (override on cart data)
+        this._ToastrService.success('Product removed from cart successfully');
       },
       error: (err) => {
         console.log(err);
@@ -61,6 +65,8 @@ export class CartComponent implements OnInit, OnDestroy {
         if(res.message == 'success') {
         //this.cartProducts = res.data; // to re-load the new set of products in cart view (override on cart data)
         this.cartProducts = null;
+        this._ToastrService.success('Cart cleared successfully');
+
         }
       },
       error: (err) => {

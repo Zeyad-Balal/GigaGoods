@@ -11,6 +11,7 @@ import { SplitTextPipe } from '../../Core/pipes/split-text.pipe';
 import { SearchPipe } from '../../Core/pipes/search.pipe';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../Core/services/cart.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -31,6 +32,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   private readonly _ProductService = inject(ProductsService);
   private readonly _CategoriesService = inject(CategoriesService);
   private readonly _CartService = inject(CartService);
+  private readonly _ToastrService = inject(ToastrService);
+
   constructor() {}
   search_value: string = '';
   productList: IProduct[] = [];
@@ -112,6 +115,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   this._CartService.addProductToCart(id).subscribe({
     next: (res) => {
       console.log(res);
+      this._ToastrService.success('Product added to cart successfully' , 'GigaGoods');
 
     },
     error: (err) => {
