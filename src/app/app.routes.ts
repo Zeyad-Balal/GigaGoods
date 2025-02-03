@@ -14,6 +14,8 @@ import { loggedGuard } from './Core/guards/logged.guard';
 import { DetailsComponent } from './components/details/details.component';
 import { CategoryDetailsComponent } from './components/category-details/category-details.component';
 import { ForgetpasswordComponent } from './components/forgetpassword/forgetpassword.component';
+import { AllOrdersComponent } from './components/all-orders/all-orders.component';
+import { OrdersComponent } from './components/orders/orders.component';
 
 export const routes: Routes = [
   {
@@ -56,6 +58,16 @@ export const routes: Routes = [
         path: 'categoryDetails/:id',
         component: CategoryDetailsComponent,
         title: 'Category Details',
+      },
+      {
+        path: 'allorders',
+        component: AllOrdersComponent, //when payment is done successfully
+        title: 'All Orders',
+      },
+      {
+        path: 'orders/:cartId',
+        component: OrdersComponent, //form to add shipping details
+        title: 'Orders',
       },
     ],
   },

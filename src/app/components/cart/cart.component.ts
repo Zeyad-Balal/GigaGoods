@@ -4,11 +4,11 @@ import { Subscription } from 'rxjs';
 import { CurrencyPipe } from '@angular/common';
 import { ICart } from '../../Core/interfaces/icart';
 import { ToastrService } from 'ngx-toastr';
-
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe ,RouterLink],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
 })
