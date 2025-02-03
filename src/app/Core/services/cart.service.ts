@@ -42,4 +42,11 @@ return this._HttpClient.put(`${environment.baseUrl}/api/v1/cart/${id}`, {
   "count": new_count
 } ,{ headers: this.myHeaders });
   }
+
+clearCart(): Observable<any> {
+  return this._HttpClient.delete(`${environment.baseUrl}/api/v1/cart`, {
+    headers: this.myHeaders,
+  });
+}
+
 }
