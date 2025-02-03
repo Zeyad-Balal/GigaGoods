@@ -40,6 +40,18 @@ export class CartComponent implements OnInit, OnDestroy {
     });
   }
 
+  updateQuantity(id: string , new_count:number) {
+    this._CartService.updateCartProductQuantity(id , new_count).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.cartProducts = res.data; // to re-load the new set of products in cart view (override on cart data)
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
   ngOnDestroy(): void {
     this.cartSubscribe?.unsubscribe();
   }

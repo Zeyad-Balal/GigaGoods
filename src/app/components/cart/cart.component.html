@@ -28,11 +28,11 @@
       </div>
       <!-- (+) & (-) buttons-->
       <div class="d-flex align-items-center gap-2">
-        <span class="text-main cr"
+        <span class="text-main cr" (click)="updateQuantity(item.product.id, item.count + 1)"
           ><i class="fa-solid fa-square-plus fa-2xl"></i
         ></span>
         <span>{{ item.count }}</span>
-        <span class="text-main cr"
+        <span class="text-main cr" (click)="updateQuantity(item.product.id, item.count - 1)"
           ><i class="fa-solid fa-square-minus fa-2xl"></i
         ></span>
       </div>

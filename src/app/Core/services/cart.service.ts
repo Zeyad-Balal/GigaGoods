@@ -34,4 +34,12 @@ export class CartService {
       headers: this.myHeaders,
     });
   }
+
+  /**/
+
+  updateCartProductQuantity(id: string , new_count:number): Observable<any> {
+return this._HttpClient.put(`${environment.baseUrl}/api/v1/cart/${id}`, {
+  "count": new_count
+} ,{ headers: this.myHeaders });
+  }
 }
