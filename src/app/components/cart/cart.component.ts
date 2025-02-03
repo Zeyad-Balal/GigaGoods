@@ -41,6 +41,7 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   updateQuantity(id: string , new_count:number) {
+    if(new_count > 0) {
     this._CartService.updateCartProductQuantity(id , new_count).subscribe({
       next: (res) => {
         console.log(res);
@@ -50,6 +51,7 @@ export class CartComponent implements OnInit, OnDestroy {
         console.log(err);
       },
     });
+  }
   }
 
   ngOnDestroy(): void {
