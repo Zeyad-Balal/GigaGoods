@@ -9,30 +9,24 @@ import { environment } from '../environments/env';
 export class CartService {
   constructor(private _HttpClient: HttpClient) {}
 
-  myHeaders: any = { token: localStorage.getItem('USER_TOKEN') };
+ 
   /**/
   addProductToCart(id: string): Observable<any> {
     let data = {
       productId: id,
     };
-    return this._HttpClient.post(`${environment.baseUrl}/api/v1/cart`, data, {
-      headers: this.myHeaders,
-    });
+    return this._HttpClient.post(`${environment.baseUrl}/api/v1/cart`, data);
   }
 
   /**/
   getProductsFromCart(): Observable<any> {
-    return this._HttpClient.get(`${environment.baseUrl}/api/v1/cart`, {
-      headers: this.myHeaders,
-    });
+    return this._HttpClient.get(`${environment.baseUrl}/api/v1/cart`);
   }
 
   /* */
 
   removeProductFromCart(id: string): Observable<any> {
-    return this._HttpClient.delete(`${environment.baseUrl}/api/v1/cart/${id}`, {
-      headers: this.myHeaders,
-    });
+    return this._HttpClient.delete(`${environment.baseUrl}/api/v1/cart/${id}`);
   }
 
   /**/
@@ -40,13 +34,11 @@ export class CartService {
   updateCartProductQuantity(id: string , new_count:number): Observable<any> {
 return this._HttpClient.put(`${environment.baseUrl}/api/v1/cart/${id}`, {
   "count": new_count
-} ,{ headers: this.myHeaders });
+} );
   }
 
 clearCart(): Observable<any> {
-  return this._HttpClient.delete(`${environment.baseUrl}/api/v1/cart`, {
-    headers: this.myHeaders,
-  });
+  return this._HttpClient.delete(`${environment.baseUrl}/api/v1/cart`);
 }
 
 }

@@ -11,7 +11,7 @@ export class OrdersService {
   constructor(private _HttpClient: HttpClient) { }
 
 
-  myHeaders: any = { token: localStorage.getItem('USER_TOKEN') };
+  
 
   /*payment using strip*/
   checkout(cartId: string | null , shippingDetails:object): Observable<any> {
@@ -19,6 +19,6 @@ export class OrdersService {
       {
         "shippingAddress": shippingDetails
       }
-      , { headers: this.myHeaders });
+      );
   }
 }
