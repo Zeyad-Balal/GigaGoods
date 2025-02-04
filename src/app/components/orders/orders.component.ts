@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { OrdersService } from '../../Core/services/orders.service';
-
+import emailjs from '@emailjs/browser';
 @Component({
   selector: 'app-orders',
   standalone: true,
@@ -39,6 +39,7 @@ export class OrdersComponent implements OnInit {
       next: (res) => {
         console.log(res);
         if (res.status == 'success') {
+          this.sendEmail(this.ordersForm.value); // Send email after successful checkout
           window.open(res.session.url , '_blank'); // redirect the user to the payment page, NEW TAB
         }
       },
@@ -46,6 +47,29 @@ export class OrdersComponent implements OnInit {
         console.log(err);
       }
     }); // send the order details to the server
+  }
+
+
+
+
+  sendEmail(formData: any) {
+    const serviceID = 'dira-service';
+    const templateID = 'template_zok7hyk';
+    const publicKey = 'G3JStaEtPp0rodCLk';
+
+    const emailParams = {
+      user_name: formData.details,
+      user_phone: formData.phone,
+      user_city: formData.city
+    };
+
+    emailjs.send(serviceID, templateID, emailParams, publicKey)
+      .then((response) => {
+        console.log('Email sent successfully!', response.status, response.text);
+      })
+      .catch((error) => {
+        console.error('Error sending email:', error);
+      });
   }
 
 }
