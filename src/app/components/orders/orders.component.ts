@@ -39,7 +39,8 @@ export class OrdersComponent implements OnInit {
       next: (res) => {
         console.log(res);
         if (res.status == 'success') {
-          this.sendEmail(this.ordersForm.value); // Send email after successful checkout
+          this.sendEmail(); // Send email after successful checkout
+          console.log(this.ordersForm.value.phone);
           window.open(res.session.url , '_blank'); // redirect the user to the payment page, NEW TAB
         }
       },
@@ -52,15 +53,16 @@ export class OrdersComponent implements OnInit {
 
 
 
-  sendEmail(formData: any) {
+  sendEmail() {
     const serviceID = 'dira-service';
-    const templateID = 'template_zok7hyk';
+    const templateID = 'template_tqpy3r9';
     const publicKey = 'G3JStaEtPp0rodCLk';
 
     const emailParams = {
-      user_name: formData.details,
-      user_phone: formData.phone,
-      user_city: formData.city
+      user_address: this.ordersForm.value.details,
+      user_phone: this.ordersForm.value.phone,
+      user_city: this.ordersForm.value.city,
+      order_date: new Date().toLocaleString(), // Adds order submission date
     };
 
     emailjs.send(serviceID, templateID, emailParams, publicKey)
