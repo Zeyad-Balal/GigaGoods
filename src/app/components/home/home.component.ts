@@ -12,6 +12,7 @@ import { SearchPipe } from '../../Core/pipes/search.pipe';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../Core/services/cart.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-home',
@@ -33,6 +34,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private readonly _CategoriesService = inject(CategoriesService);
   private readonly _CartService = inject(CartService);
   private readonly _ToastrService = inject(ToastrService);
+  private readonly _NgxSpinnerService = inject(NgxSpinnerService);
 
   constructor() {}
   search_value: string = '';
@@ -86,11 +88,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   //to load products once the component is opened
   ngOnInit(): void {
+    this._NgxSpinnerService.show('custom-spinner1');
     this.getAllCategoriesSubscription = this._CategoriesService
       .getAllCategories()
       .subscribe({
         next: (res) => {
           this.categoriesList = res.data; //[{ _id: '1', name: 'category1' }];
+          this._NgxSpinnerService.hide('custom-spinner1');
         },
       });
     this.getAllProductsSubscription = this._ProductService
@@ -103,20 +107,21 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
   }
 
-
   //to add product to cart
   addToCart(id: string): void {
-  this._CartService.addProductToCart(id).subscribe({
-    next: (res) => {
-      console.log(res);
-      this._ToastrService.success('Product added to cart successfully' , 'GigaGoods');
-
-    },
-    error: (err) => {
-      console.log(err);
-    },
-  });
-}
+    this._CartService.addProductToCart(id).subscribe({
+      next: (res) => {
+        console.log(res);
+        this._ToastrService.success(
+          'Product added to cart successfully',
+          'GigaGoods'
+        );
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
 
   ngOnDestroy(): void {
     //to unsubscribe from the observable (get all products)

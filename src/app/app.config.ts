@@ -1,4 +1,4 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter, withViewTransitions } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -8,6 +8,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
 import { headerInterceptor } from './Core/interceptors/header.interceptor';
 import { errorsInterceptor } from './Core/interceptors/errors.interceptor';
+import { NgxSpinner, NgxSpinnerModule } from 'ngx-spinner';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,5 +17,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch() , withInterceptors([headerInterceptor , errorsInterceptor])),
     provideAnimations(),
     provideToastr(),
+    importProvidersFrom(NgxSpinnerModule)
   ],
 };
