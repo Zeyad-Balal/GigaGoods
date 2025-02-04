@@ -92,9 +92,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         next: (res) => {
           this.categoriesList = res.data; //[{ _id: '1', name: 'category1' }];
         },
-        error: (err) => {
-          console.log(err);
-        },
       });
     this.getAllProductsSubscription = this._ProductService
       .getAllProducts()
@@ -102,9 +99,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         next: (res) => {
           this.productList = res.data;
           console.log(res.data);
-        },
-        error: (err) => {
-          console.log(err);
         },
       });
   }
