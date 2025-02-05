@@ -88,13 +88,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   //to load products once the component is opened
   ngOnInit(): void {
-    this._NgxSpinnerService.show('custom-spinner1');
+    //this._NgxSpinnerService.show('custom-spinner1');
     this.getAllCategoriesSubscription = this._CategoriesService
       .getAllCategories()
       .subscribe({
         next: (res) => {
           this.categoriesList = res.data; //[{ _id: '1', name: 'category1' }];
-          this._NgxSpinnerService.hide('custom-spinner1');
+          //this._NgxSpinnerService.hide('custom-spinner1');
         },
       });
     this.getAllProductsSubscription = this._ProductService
