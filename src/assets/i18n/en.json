@@ -1,0 +1,11 @@
+{
+    "navbar":{
+        "Home" : "Home",
+        "Products" : "Products",
+        "Categories" : "Categories",
+        "Brands" : "Brands",
+        "Sign out" :"Sign out",
+        "Login" : "Login",
+        "Register" : "Register"
+        }
+}
