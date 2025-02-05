@@ -24,9 +24,14 @@ export class MyTranslateService {
 
     /* DIRECT TRANSLATION LOGIC */
     this.changeDirection();
-
-  
   }
+
+  //change the language function
+  changeLang(lang:string):void{
+    localStorage.setItem('lang', lang);
+    this._TranslateService.use(lang);
+    this.changeDirection();
+  } 
 
 
   changeDirection():void{

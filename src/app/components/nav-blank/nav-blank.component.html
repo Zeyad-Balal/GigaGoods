@@ -1,63 +1,49 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="home">
-      <img
-        src="./assets/images/freshcart-logo.svg"
-        alt="logo"
-        class="d-inline-block align-text-top"
-      />
+      <img src="./assets/images/freshcart-logo.svg" alt="logo" class="d-inline-block align-text-top" />
     </a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
-      aria-controls="navbarNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" routerLink="home" routerLinkActive="active-link"
-            >{{"navbar.Home" | translate}}</a
-          >
+          <a class="nav-link" routerLink="home" routerLinkActive="active-link">{{"navbar.Home" | translate}}</a>
         </li>
         <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="products"
-            routerLinkActive="active-link"
-            >{{"navbar.Products" | translate}}</a
-          >
+          <a class="nav-link" routerLink="products" routerLinkActive="active-link">{{"navbar.Products" | translate}}</a>
         </li>
         <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="categories"
-            routerLinkActive="active-link"
-            >{{"navbar.Categories" | translate}}</a
-          >
+          <a class="nav-link" routerLink="categories" routerLinkActive="active-link">{{"navbar.Categories" |
+            translate}}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="brands" routerLinkActive="active-link"
-            >{{"navbar.Brands" | translate}}</a
-          >
+          <a class="nav-link" routerLink="brands" routerLinkActive="active-link">{{"navbar.Brands" | translate}}</a>
         </li>
       </ul>
 
       <!-- Icons -->
       <ul class="navbar-nav ms-auto">
+        <!--language button-->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{"navbar.Lang" | translate}}
+          </a>
+          <ul class="dropdown-menu cr">
+            <li (click)="changLanguage('en')"><a class="dropdown-item">EN</a></li>
+            <li (click)="changLanguage('ar')"><a class="dropdown-item">AR</a></li>
+          </ul>
+        </li>
+
+
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="cart"
-            >
+          <a class="nav-link" routerLink="cart">
             <i class="fa-solid fa-cart-shopping"></i>
             <sup>1</sup>
-              </a
-          >
+          </a>
         </li>
         <li class="nav-item">
           <a class="nav-link"><i class="fa-brands fa-facebook"></i></a>
