@@ -46,6 +46,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   customOptionsCategories: OwlOptions = {
     loop: true,
+    rtl: true,
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
@@ -73,6 +74,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   };
   customOptionsMain: OwlOptions = {
     loop: true,
+    rtl: true,
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,

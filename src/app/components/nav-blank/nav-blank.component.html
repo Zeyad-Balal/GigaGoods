@@ -7,7 +7,7 @@
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" routerLink="home" routerLinkActive="active-link">{{"navbar.Home" | translate}}</a>
@@ -25,7 +25,7 @@
       </ul>
 
       <!-- Icons -->
-      <ul class="navbar-nav ms-auto">
+      <ul class="navbar-nav">
         <!--language button-->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -60,10 +60,11 @@
         <li class="nav-item">
           <a class="nav-link"><i class="fa-brands fa-youtube"></i></a>
         </li>
+        <button class="nav-item btn">
+          <a class="nav-link cr" (click)="_AuthService.logOut()">{{"navbar.Sign out" | translate}}</a>
+        </button>
       </ul>
-      <button class="btn-main">
-        <a class="nav-link cr" (click)="_AuthService.logOut()">{{"navbar.Sign out" | translate}}</a>
-      </button>
+
     </div>
   </div>
 </nav>
