@@ -114,6 +114,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this._CartService.addProductToCart(id).subscribe({
       next: (res) => {
         console.log(res);
+        /*update cart counter*/
+        this._CartService.cartCounter.next(res.numOfCartItems);
         this._ToastrService.success(
           'Product added to cart successfully',
           'GigaGoods'
