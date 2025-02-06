@@ -10,43 +10,45 @@ export class MyTranslateService {
   private readonly _TranslateService
     = inject(TranslateService);
 
-    private readonly _PLATFORM_ID
+  private readonly _PLATFORM_ID
     = inject(PLATFORM_ID);
 
-    private readonly _Renderer2
+  private readonly _Renderer2
     = inject(RendererFactory2).createRenderer(null, null);
   constructor() {
 
-    if(isPlatformBrowser(this._PLATFORM_ID)){
-    /* WORDS TRANSLATION LOGIC */
-    //1. get the current language from local storage
-    let local_storae_language = localStorage.getItem('lang');
+    if (isPlatformBrowser(this._PLATFORM_ID)) {
+      /* WORDS TRANSLATION LOGIC */
+      //1. get the current language from local storage
+      //let local_storae_language = localStorage.getItem('lang');
 
-    //2. set default language
-    this._TranslateService.setDefaultLang('en');
+      //2. set default language
+      this._TranslateService.setDefaultLang('en');
 
-
-    //3. get the current language from local storage
-    this._TranslateService.use(local_storae_language!);
-
-    /* DIRECT TRANSLATION LOGIC */
-    this.changeDirection();
+      /* DIRECT TRANSLATION LOGIC */
+      this.setLang();
+      
     }
   }
 
   //change the language function
-  changeLang(lang:string):void{
-    if(isPlatformBrowser(this._PLATFORM_ID)){
+  changeLang(lang: string): void {
+    if (isPlatformBrowser(this._PLATFORM_ID)) {
 
-    localStorage.setItem('lang', lang);
-    this._TranslateService.use(lang);
-    this.changeDirection();
+      localStorage.setItem('lang', lang);
+      this.setLang();
+      
     }
-  } 
+  }
 
 
-  changeDirection():void{
+  setLang(): void {
     let local_storae_language = localStorage.getItem('lang');
+
+    if (local_storae_language !== null) {
+      //3. get the current language from local storage
+      this._TranslateService.use(local_storae_language!);
+    }
 
     if (local_storae_language === 'en') { //dir ltr
 
@@ -58,7 +60,7 @@ export class MyTranslateService {
 
     }
 
-    else if(local_storae_language === 'ar') { //dir rtl
+    else if (local_storae_language === 'ar') { //dir rtl
       //document.documentElement.dir = 'rtl';
       this._Renderer2.setAttribute(document.documentElement, 'dir', 'rtl');
       this._Renderer2.setAttribute(document.documentElement, 'lang', 'ar');
