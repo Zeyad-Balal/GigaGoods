@@ -35,6 +35,7 @@ export class CartComponent implements OnInit, OnDestroy {
     this._CartService.removeProductFromCart(id).subscribe({
       next: (res) => {
         console.log(res);
+        this._CartService.cartCounter.next(res.numOfCartItems); 
         this.cartProducts = res.data; // to re-load the new set of products in cart view (override on cart data)
         this._ToastrService.success('Product removed from cart successfully');
       },
@@ -65,6 +66,7 @@ export class CartComponent implements OnInit, OnDestroy {
         if(res.message == 'success') {
         //this.cartProducts = res.data; // to re-load the new set of products in cart view (override on cart data)
         this.cartProducts = null;
+        this._CartService.cartCounter.next(0);
         this._ToastrService.success('Cart cleared successfully');
 
         }

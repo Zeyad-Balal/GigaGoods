@@ -25,6 +25,13 @@ export class NavBlankComponent implements OnInit {
     this._MyTranslateService.changeLang(lang);
   }
   ngOnInit(): void {
+
+this._CartService.getProductsFromCart().subscribe({
+  next: (res) => {
+   this._CartService.cartCounter.next(res.numOfCartItems)
+  },
+})
+
     this._CartService.cartCounter.subscribe({
       next: (data) => { // data carry data from behav sub.
         this.cartNumber = data;
