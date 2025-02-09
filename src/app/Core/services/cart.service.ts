@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../environments/env';
 
@@ -9,7 +9,7 @@ import { environment } from '../environments/env';
 export class CartService {
   constructor(private _HttpClient: HttpClient) {}
 
-  cartCounter:BehaviorSubject<number> = new BehaviorSubject(0);
+  cartCounter:WritableSignal<number> = signal(0);
  
   /**/
   addProductToCart(id: string): Observable<any> {

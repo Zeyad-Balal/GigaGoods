@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, Signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthServiceService } from '../../Core/services/auth-service.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -18,7 +18,7 @@ export class NavBlankComponent implements OnInit {
   readonly _TranslateService = inject(TranslateService);
   readonly _CartService = inject(CartService);
 
-  cartNumber: number = 0;
+  cartNumber:Signal<number> = computed(() => this._CartService.cartCounter());
 
   changLanguage(lang: string): void {
 
@@ -28,15 +28,15 @@ export class NavBlankComponent implements OnInit {
 
 this._CartService.getProductsFromCart().subscribe({
   next: (res) => {
-   this._CartService.cartCounter.next(res.numOfCartItems)
+   this._CartService.cartCounter.set(res.numOfCartItems)
   },
 })
 
-    this._CartService.cartCounter.subscribe({
+    /*this._CartService.cartCounter.subscribe({
       next: (data) => { // data carry data from behav sub.
         this.cartNumber = data;
       },
-    })
+    })*/
 
 
   }
