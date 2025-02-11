@@ -1,148 +1,132 @@
-<section class="b-main-light rounded-4 shadow p-3 my-2">
-  <h1 class="h2 text-main">Register</h1>
+<section class="b-main-light rounded-4 shadow p-4 my-4">
+  <div class="card">
+    <div class="card-body">
+      <h1 class="h2 text-main text-center mb-4">Register</h1>
 
-  <form [formGroup]="registerForm" (ngSubmit)="registerSubmit()">
-    <div class="my-2">
-      <label for="name">Name</label>
-      <input
-        [ngClass]="{
-          'is-invalid':
-            registerForm.get('name')?.errors &&
-            (registerForm.get('name')?.touched ||
-              registerForm.get('name')?.dirty),
-          'is-valid':
-            !registerForm.get('name')?.errors &&
-            (registerForm.get('name')?.touched ||
-              registerForm.get('name')?.dirty)
-        }"
-        type="text"
-        formControlName="name"
-        class="form-control"
-        id="name"
-        placeholder="Enter name"
-      />
-      @if (registerForm.get('name')?.errors &&
-      (registerForm.get('name')?.touched || registerForm.get('name')?.dirty)) {
+      <form [formGroup]="registerForm" (ngSubmit)="registerSubmit()">
+        <!-- Name Field -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input
+            type="text"
+            formControlName="name"
+            class="form-control"
+            id="name"
+            placeholder="Enter your name"
+            [ngClass]="{
+              'is-invalid': registerForm.get('name')?.invalid && (registerForm.get('name')?.touched || registerForm.get('name')?.dirty),
+              'is-valid': registerForm.get('name')?.valid && (registerForm.get('name')?.touched || registerForm.get('name')?.dirty)
+            }"
+          />
+          @if (registerForm.get('name')?.invalid && (registerForm.get('name')?.touched || registerForm.get('name')?.dirty)) {
+            <div class="invalid-feedback">
+              @if(registerForm.get('name')?.errors?.['required']) {
+                <p>Name is required</p>
+              }
+              @if(registerForm.get('name')?.errors?.['minlength']) {
+                <p>Name should be more than 3 letters</p>
+              }
+            </div>
+          }
+        </div>
 
-      <div class="alert alert-danger w-50">
-        @if(registerForm.get('name')?.getError('required')) {
-        <p class="m-0">name is required</p>
-        } @else if(registerForm.get('name')?.getError('minlength')) {
-        <p class="m-0">name should be more than 3 letters</p>
+        <!-- Email Field -->
+        <div class="mb-3">
+          <label for="email" class="form-label">E-mail</label>
+          <input
+            type="email"
+            formControlName="email"
+            class="form-control"
+            id="email"
+            placeholder="Enter your email"
+            [ngClass]="{
+              'is-invalid': registerForm.get('email')?.invalid && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty),
+              'is-valid': registerForm.get('email')?.valid && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty)
+            }"
+          />
+          @if (registerForm.get('email')?.invalid && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty)) {
+            <div class="invalid-feedback">
+              @if(registerForm.get('email')?.errors?.['required']) {
+                <p>Email is required</p>
+              }
+              @if(registerForm.get('email')?.errors?.['email']) {
+                <p>Please enter a valid email address</p>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Password Field -->
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            formControlName="password"
+            class="form-control"
+            id="password"
+            placeholder="Enter your password"
+            [ngClass]="{
+              'is-invalid': registerForm.get('password')?.invalid && (registerForm.get('password')?.touched || registerForm.get('password')?.dirty),
+              'is-valid': registerForm.get('password')?.valid && (registerForm.get('password')?.touched || registerForm.get('password')?.dirty)
+            }"
+          />
+          @if (registerForm.get('password')?.invalid && (registerForm.get('password')?.touched || registerForm.get('password')?.dirty)) {
+            <div class="invalid-feedback">
+              @if(registerForm.get('password')?.errors?.['required']) {
+                <p>Password is required</p>
+              }
+              @if(registerForm.get('password')?.errors?.['minlength']) {
+                <p>Password should be more than 6 characters</p>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Confirm Password Field -->
+        <div class="mb-3">
+          <label for="rePassword" class="form-label">Confirm Password</label>
+          <input
+            type="password"
+            formControlName="rePassword"
+            class="form-control"
+            id="rePassword"
+            placeholder="Confirm your password"
+            [ngClass]="{
+              'is-invalid': registerForm.get('rePassword')?.invalid && (registerForm.get('rePassword')?.touched || registerForm.get('rePassword')?.dirty),
+              'is-valid': registerForm.get('rePassword')?.valid && (registerForm.get('rePassword')?.touched || registerForm.get('rePassword')?.dirty)
+            }"
+          />
+          @if (registerForm.get('rePassword')?.invalid && (registerForm.get('rePassword')?.touched || registerForm.get('rePassword')?.dirty)) {
+            <div class="invalid-feedback">
+              @if(registerForm.get('rePassword')?.errors?.['required']) {
+                <p>Confirm Password is required</p>
+              }
+              @if(registerForm.get('rePassword')?.errors?.['passwordMismatch']) {
+                <p>Passwords do not match</p>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-primary" type="submit" [disabled]="isLoad">
+            @if(isLoad) {
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              <span class="visually-hidden">Loading...</span>
+            } @else {
+              Register
+            }
+          </button>
+        </div>
+
+        <!-- Error Message -->
+        @if(msgError) {
+          <div class="alert alert-danger mt-3" role="alert">
+            {{ msgError }}
+          </div>
         }
-      </div>
-      }
-      <label for="password">Password</label>
-      <input
-        [ngClass]="{
-          'is-invalid':
-            registerForm.get('name')?.errors &&
-            (registerForm.get('name')?.touched ||
-              registerForm.get('name')?.dirty),
-          'is-valid':
-            !registerForm.get('name')?.errors &&
-            (registerForm.get('name')?.touched ||
-              registerForm.get('name')?.dirty)
-        }"
-        type="text"
-        formControlName="password"
-        class="form-control"
-        id="password"
-        placeholder="Enter password"
-      />
-      @if (registerForm.get('password')?.errors &&
-      (registerForm.get('password')?.touched ||
-      registerForm.get('password')?.dirty)) {
-
-      <div class="alert alert-danger w-50">
-        @if(registerForm.get('password')?.getError('required')) {
-        <p class="m-0">password is required</p>
-        } @else if(registerForm.get('password')?.getError('minlength')) {
-        <p class="m-0">
-          password should be more than 6 letters or characters or digits
-        </p>
-        }
-      </div>
-      }
-
-      <label for="password">Confirm Password</label>
-      <input
-        [ngClass]="{
-          'is-invalid':
-            registerForm.get('name')?.errors &&
-            (registerForm.get('name')?.touched ||
-              registerForm.get('name')?.dirty),
-          'is-valid':
-            !registerForm.get('name')?.errors &&
-            (registerForm.get('name')?.touched ||
-              registerForm.get('name')?.dirty)
-        }"
-        type="text"
-        formControlName="rePassword"
-        class="form-control"
-        id="rePassword"
-        placeholder="confirm password"
-      />
-      @if (registerForm.get('rePassword')?.errors &&
-      (registerForm.get('rePassword')?.touched ||
-      registerForm.get('rePassword')?.dirty)) { }
-
-      <label for="email">E-mail</label>
-      <input
-        [ngClass]="{
-          'is-invalid':
-            registerForm.get('name')?.errors &&
-            (registerForm.get('name')?.touched ||
-              registerForm.get('name')?.dirty),
-          'is-valid':
-            !registerForm.get('name')?.errors &&
-            (registerForm.get('name')?.touched ||
-              registerForm.get('name')?.dirty)
-        }"
-        type="text"
-        formControlName="email"
-        class="form-control"
-        id="email"
-        placeholder="Enter email"
-      />
-      @if (registerForm.get('email')?.errors &&
-      (registerForm.get('email')?.touched || registerForm.get('email')?.dirty))
-      {
-
-      <div class="alert alert-danger w-50">
-        @if(registerForm.get('email')?.getError('required')) {
-        <p class="m-0">email is required</p>
-        }
-      </div>
-      }
-      <!--
-      <label for="phone">Phone</label>
-      <input
-        type="text"
-        formControlName="phone"
-        class="form-control"
-        id="phone"
-        placeholder="Enter phone"
-      />
-      @if (registerForm.get('phone')?.errors &&
-      (registerForm.get('phone')?.touched || registerForm.get('phone')?.dirty))
-      {
-
-      <div class="alert alert-danger w-50">
-        @if(registerForm.get('phone')?.getError('required')) {
-        <p class="m-0">phone is required</p>
-        }
-      </div>
-      }-->
-      <button class="btn-main ms-auto d-block" type="submit">
-        Register @if(isLoad){
-        <span><li class="fas fa-spin fa-spinner"></li></span>
-        }
-      </button>
-
-      @if(msgError){
-      <p class="alert alert-danger w-50">{{ msgError }}</p>
-      }
+      </form>
     </div>
-  </form>
+  </div>
 </section>

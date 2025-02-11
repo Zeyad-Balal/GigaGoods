@@ -1,50 +1,39 @@
-<section class="bg-main-light rounded-4 shadow p-4 my-2 w-75 mx-auto">
-    <div class="d-flex justify-content-between align-items-center">
-  <h1 class="h2 text-muted">Shop Cart</h1>
-  <button class="btn btn-outline-danger btn-sm" (click)="clearAllCart()">Clear Cart</button>
-</div>
-
-  @for (item of cartProducts?.products ; track item.product.id) {
-  <div class="row mb-1 border-bottom">
-    <div class="col-md-1">
-      <div>
-        <img
-          [src]="item.product.imageCover"
-          [alt]="item.product.title"
-          class="w-100"
-        />
-      </div>
+<section class="container py-5">
+  <div class="card border-0 shadow-lg rounded-4 p-4 w-75 mx-auto">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="h2 text-muted">Shop Cart</h1>
+      <button class="btn btn-danger btn-sm px-3 py-2 shadow rounded-pill d-flex align-items-center gap-2" (click)="clearAllCart()">
+        <i class="fa-solid fa-trash-can"></i> <span>Clear Cart</span>
+      </button>
     </div>
-    <div class="col-md-11 d-flex align-items-center justify-content-between">
-      <!--product data-->
-      <div>
-        <h3 class="h5">{{ item.product.title }}</h3>
-        <p class="text-main">Price: {{ item.price | currency : "GBP" }}</p>
-        <button
-          class="text-danger btn p-0 cr"
-          (click)="removeProduct(item.product.id)"
-        >
-          <li class="fa-solid fa-trash"></li>
-        </button>
+    
+    @for (item of cartProducts?.products ; track item.product.id) {
+      <div class="row mb-3 pb-3 border-bottom align-items-center">
+        <div class="col-md-2 text-center">
+          <img [src]="item.product.imageCover" [alt]="item.product.title" class="w-100 rounded shadow-sm" />
+        </div>
+        <div class="col-md-6">
+          <h3 class="h5 fw-bold mb-1">{{ item.product.title }}</h3>
+          <p class="text-main m-0">Price: {{ item.price | currency : "GBP" }}</p>
+          <button class="btn btn-outline-danger btn-sm px-3 py-2 shadow rounded-pill d-flex align-items-center gap-2" (click)="removeProduct(item.product.id)">
+            <i class="fa-solid fa-trash"></i> <span>Remove</span>
+          </button>
+        </div>
+        <div class="col-md-4 d-flex justify-content-end align-items-center gap-3">
+          <span class="text-main fs-4 cr" (click)="updateQuantity(item.product.id, item.count + 1)">
+            <i class="fa-solid fa-square-plus"></i>
+          </span>
+          <span class="fs-5">{{ item.count }}</span>
+          <span class="text-main fs-4 cr" (click)="updateQuantity(item.product.id, item.count - 1)">
+            <i class="fa-solid fa-square-minus"></i>
+          </span>
+        </div>
       </div>
-      <!-- (+) & (-) buttons-->
-      <div class="d-flex align-items-center gap-2">
-        <span class="text-main cr" (click)="updateQuantity(item.product.id, item.count + 1)"
-          ><i class="fa-solid fa-square-plus fa-2xl"></i
-        ></span>
-        <span>{{ item.count }}</span>
-        <span class="text-main cr" (click)="updateQuantity(item.product.id, item.count - 1)"
-          ><i class="fa-solid fa-square-minus fa-2xl"></i
-        ></span>
-      </div>
+    }
+    
+    <div class="d-flex justify-content-between align-items-center mt-4">
+      <p class="fs-5 fw-bold text-main">Total Price: {{ cartProducts?.totalCartPrice | currency : "GBP" }}</p>
+      <button [routerLink]="['/orders', cartProducts?._id]" class="btn btn-main px-4 py-2 rounded-pill">Proceed to Checkout</button>
     </div>
   </div>
-  }
-  <div class="d-flex justify-content-between align-items-center my-4">
-  <p class="text-main">
-    Total Price: {{ cartProducts?.totalCartPrice | currency : "GBP" }}
-  </p>
-  <!--redirect to form of shipping & payment detail and send cart ID-->
-  <button [routerLink]="['/orders', cartProducts?._id]" class="btn btn-main">Order</button>
-</div>
 </section>

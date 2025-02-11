@@ -1,0 +1,32 @@
+.card {
+    max-width: 400px;
+    margin: 0 auto;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-body {
+    padding: 2rem;
+  }
+  
+  .form-label {
+    font-weight: 500;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 0.5rem 1rem;
+    &:hover {
+      background-color: darken(#007bff, 10%);
+    }
+  }
+  
+  .alert-danger {
+    margin-top: 1rem;
+  }
+  
+  .invalid-feedback {
+    color: #dc3545;
+    font-size: 0.875rem;
+  } 

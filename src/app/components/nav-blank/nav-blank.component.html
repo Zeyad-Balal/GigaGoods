@@ -27,7 +27,7 @@
       <!-- Icons -->
       <ul class="navbar-nav">
         <!--language button-->
-        <li class="nav-item dropdown">
+        <!--<li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             {{"navbar.lang" | translate}}
           </a>
@@ -36,33 +36,19 @@
             <li (click)="changLanguage('ar')"><a class="dropdown-item">AR</a></li>
           </ul>
         </li>
-
-
-
+        -->
         <li class="nav-item">
           <a class="nav-link position-relative" routerLink="cart">
             <i class="fa-solid fa-cart-shopping fa-2xl"></i>
             <span class="badge bg-info position-absolute top-0 start-0">{{cartNumber()}}</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link"><i class="fa-brands fa-facebook"></i></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link"><i class="fa-brands fa-twitter"></i></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link"><i class="fa-brands fa-instagram"></i></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link"><i class="fa-brands fa-linkedin"></i></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link"><i class="fa-brands fa-youtube"></i></a>
-        </li>
-        <button class="nav-item btn">
-          <a class="nav-link cr" (click)="_AuthService.logOut()">{{"navbar.Sign out" | translate}}</a>
+        <!-- Sign Out Button -->
+        <button class="btn btn-danger logout-btn" (click)="_AuthService.logOut()">
+          <i class="fa-solid fa-right-from-bracket me-2"></i>
+          {{"navbar.Sign out" | translate}}
         </button>
+
       </ul>
 
     </div>
